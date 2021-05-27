@@ -1,0 +1,19 @@
+.modal {
+  position: absolute;
+  top: 1%;
+  right: 2rem;
+  background-color: var(--purple);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  z-index: 2;
+  align-items: center;
+  display: flex;
+}
+
+.value {
+  color: white;
+  font-family: rajdhani;
+  font-weight: bold;
+}

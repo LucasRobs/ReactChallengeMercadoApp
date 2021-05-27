@@ -1,0 +1,29 @@
+.headerContainer {
+  height: 5rem;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+}
+
+.headerContent {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    img {
+      width: 8rem;
+      height: 4rem;
+      margin-left: 3rem;
+    }
+  }
+  .cart {
+    margin-right: 3rem;
+  }
+
+  .cartButton {
+    background: transparent;
+    border: 0;
+  }
+}
