@@ -3,6 +3,10 @@
   background: var(--yellow);
   display: flex;
   align-items: center;
+  z-index: 9999;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 .headerContent {

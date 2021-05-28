@@ -13,22 +13,14 @@ export function Announcement() {
       <Slide>
         <div className="each-slide">
           <div
-            style={{
-              backgroundImage: `url(${slideImages[0]})`,
-              height: "400px",
-              width: "100%",
-              maxWidth: "100%",
-            }}
+            className={styles.image}
+            style={{ backgroundImage: `url(${slideImages[0]})` }}
           />
         </div>
         <div className="each-slide">
           <div
-            style={{
-              backgroundImage: `url(${slideImages[1]})`,
-              height: "400px",
-              width: "100%",
-              maxWidth: "100%",
-            }}
+            className={styles.image}
+            style={{ backgroundImage: `url(${slideImages[1]})` }}
           />
         </div>
       </Slide>

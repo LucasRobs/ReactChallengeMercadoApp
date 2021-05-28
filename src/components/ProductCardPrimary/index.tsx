@@ -6,7 +6,10 @@ import styles from "./styles.module.scss";
 export function ProductCardPrimary() {
   return (
     <div className={styles.container}>
-      <div className={styles.imageProducts}>
+      <div className={styles.tagPromotion}>
+        <img src="/images/tag.png" />
+      </div>
+      <div className={styles.imageProduct}>
         <img src="/images/abacaxi.png" />
       </div>
 

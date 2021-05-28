@@ -1,4 +1,4 @@
-export interface ProductsProps{
+export interface ProductProps{
   id: string,
   order_number: string,
   stock: number,
