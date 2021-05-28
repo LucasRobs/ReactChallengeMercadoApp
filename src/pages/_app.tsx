@@ -10,7 +10,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Supermercado Show</title>
       </Head>
-      <Header />
       <Products />
     </>
   );
