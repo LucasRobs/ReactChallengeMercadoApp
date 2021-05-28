@@ -1,6 +1,5 @@
 import styles from "./style.module.scss";
-import { FaShoppingCart } from "react-icons/fa";
-import Cart from "../Cart";
+import { Cart } from "../Cart";
 
 export function Header() {
   return (
@@ -9,12 +8,9 @@ export function Header() {
         <div className={styles.logo}>
           <img src="/images/logo.png" alt="logo" />
         </div>
-
         <div className={styles.cart}>
           <button className={styles.cartButton}>
-            <div>
-              <Cart value={10} />
-            </div>
+            <Cart value={10} />
           </button>
         </div>
       </div>
