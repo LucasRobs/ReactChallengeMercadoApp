@@ -1,0 +1,61 @@
+.container {
+  background-color: white;
+  width: 100%;
+  height: 6rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 20px;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.imageProduct {
+  justify-content: center;
+  width: 100px;
+  img {
+    height: 100%;
+  }
+}
+
+.infoProduct {
+  justify-content: center;
+  display: inline-block;
+  width: 100%;
+  .nameProduct {
+    height: 50%;
+    font-size: 1.5rem;
+    font-family: rajdhani;
+  }
+
+  .lowMiddleContainer {
+    display: flex;
+    position: relative;
+    .priceProduct {
+      height: 50%;
+      .offer {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    }
+    .infoPromotion {
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+
+.buttonsProduct {
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5rem;
+  button {
+    background: transparent;
+    border: 0;
+    height: 40%;
+  }
+  .ammountProduct {
+    text-align: center;
+    height: 20%;
+  }
+}
