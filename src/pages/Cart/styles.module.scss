@@ -1,16 +1,42 @@
 .cartContainer {
   display: flex;
-  align-items: center;
   justify-content: center;
   margin: 10px auto;
   width: 85%;
 }
 
 .leftContainerArea {
-  width: 60%;
+  width: 70%;
 }
 
 .rightContainerArea {
-  background-color: hotpink;
-  width: 40%;
+  margin-left: 15px;
+  width: 30%;
+  padding: 1rem;
+  height: 100%;
+  border: 1px solid var(--gray-300);
+  border-radius: 20px;
+  -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+  .valuesInformation {
+    .values {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .checkOut {
+    margin-top: 1rem;
+    button {
+      background: #7d7;
+      border: 0px solid var(--gray-300);
+      border-radius: 5px;
+      height: 50px;
+      width: 100%;
+      color: white;
+      font-size: 1.5rem;
+      font-family: roboto;
+      font-weight: bolder;
+    }
+  }
 }
