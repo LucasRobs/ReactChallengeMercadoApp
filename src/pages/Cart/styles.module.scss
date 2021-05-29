@@ -1,0 +1,21 @@
+.cartContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
+  width: 85%;
+  background-color: aqua;
+  height: 105px;
+}
+
+.leftContainerArea {
+  background-color: firebrick;
+  height: 100px;
+  width: 60%;
+}
+
+.rightContainerArea {
+  background-color: hotpink;
+  height: 100px;
+  width: 40%;
+}

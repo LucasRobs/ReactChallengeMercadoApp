@@ -30,7 +30,9 @@ export function ModalProductDetail(modalProps: ModalProps) {
       </div>
       <div className={styles.rightInformation}>
         <div className={styles.infoProduct}>
-          <div className={styles.nameProduct}>Abacaxi</div>
+          <div className={styles.nameProduct}>
+            ABSORVENTE ALWAYS PROTETOR DIARIO LEVE 40 PAGUE 35 UNIDADES
+          </div>
           <div className={styles.priceProduct}>
             <div className={styles.fullprice}>
               <s>R$6,50</s>
@@ -47,7 +49,12 @@ export function ModalProductDetail(modalProps: ModalProps) {
             <AiOutlinePlusCircle size={25} color="green" />
           </button>
         </div>
-        <div className={styles.infoPromotion}>Você ganha 3 unidades gratis</div>
+        <div className={styles.infoPromotion}>
+          Você ganha 3 unidades gratis
+          <div className={styles.take}>Leve 4</div>
+          <hr />
+          <div className={styles.buy}>Pegue 3</div>
+        </div>
       </div>
     </Modal>
   );

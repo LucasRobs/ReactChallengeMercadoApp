@@ -24,6 +24,7 @@ export default function Products() {
       <button type="button" onClick={changeStateProductDetailModal}>
         Open Modal
       </button>
+
       <ModalProductDetail
         isOpen={productDetailModalOpen}
         changeStateModal={changeStateProductDetailModal}
