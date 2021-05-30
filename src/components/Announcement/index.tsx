@@ -12,7 +12,7 @@ export function Announcement() {
   return (
     <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false}>
       {slideImages.map((image) => (
-        <div>
+        <div key={2}>
           <img src={image} />
         </div>
       ))}

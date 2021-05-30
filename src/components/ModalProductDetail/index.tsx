@@ -1,7 +1,6 @@
 import Modal from "react-modal";
 import styles from "./styles.module.scss";
 
-import { ProductProps } from "../../modules/Product";
 import {
   AiOutlineMinusCircle,
   AiOutlinePlusCircle,
@@ -33,11 +32,23 @@ export function ModalProductDetail(modalProps: ModalProps) {
           <div className={styles.nameProduct}>
             ABSORVENTE ALWAYS PROTETOR DIARIO LEVE 40 PAGUE 35 UNIDADES
           </div>
-          <div className={styles.priceProduct}>
+          <div className={styles.price}>
             <div className={styles.fullprice}>
-              <s>R$6,50</s>
+              De:{" "}
+              <s style={{ color: "red" }}>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(3.4)}
+              </s>{" "}
+              Por:
             </div>
-            <div className={styles.offer}> R$3,40</div>
+            <div className={styles.offer}>
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(2.3)}
+            </div>
           </div>
         </div>
         <div className={styles.buttonsProduct}>
@@ -50,10 +61,11 @@ export function ModalProductDetail(modalProps: ModalProps) {
           </button>
         </div>
         <div className={styles.infoPromotion}>
-          Você ganha 3 unidades gratis
-          <div className={styles.take}>Leve 4</div>
-          <hr />
-          <div className={styles.buy}>Pegue 3</div>
+          3 unidades gratis
+          <div className={styles.discount}>Meu desconto</div>
+          <div className={styles.numbers}>
+            LEVE <span>4</span> PAGUE <span>3</span>
+          </div>
         </div>
       </div>
     </Modal>

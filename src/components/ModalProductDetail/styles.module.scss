@@ -13,7 +13,7 @@
 
 .reactModalContent {
   width: 100%;
-  max-width: 60%;
+  max-width: 40%;
   background: white;
   padding: 1rem;
   position: relative;
@@ -34,12 +34,10 @@
 }
 
 .imageProduct {
-  display: flex;
   justify-content: center;
   width: 100%;
   img {
     width: 100%;
-    height: 100%;
   }
 }
 
@@ -48,17 +46,17 @@
   justify-content: center;
   display: inline-block;
   width: 100%;
+
   .nameProduct {
     margin-top: 30px;
     margin-bottom: 30px;
-    font-size: 1.5rem;
-    font-family: rajdhani;
+    font-size: 1rem;
   }
 
-  .priceProduct {
+  .price {
     .offer {
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.8rem;
     }
   }
 }
@@ -69,6 +67,7 @@
   width: 100%;
   align-items: center;
   margin-bottom: 5px;
+
   button {
     background: transparent;
     border: 0;
@@ -78,19 +77,39 @@
 
 .rightInformation {
   width: 50%;
+  padding-right: 3%;
 }
 
 .infoPromotion {
   text-align: center;
+
+  .discount {
+    margin-top: 1rem;
+    color: var(--green);
+    text-align: left;
+    margin-left: 5%;
+  }
+
+  .numbers {
+    font-family: rajdhani;
+    font-size: 1.4rem;
+    color: var(--green);
+    text-align: left;
+    margin-left: 5%;
+
+    span {
+      font-weight: bold;
+    }
+  }
 }
 
 .take {
   margin-top: 2rem;
-  font-size: 5rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 
 .buy {
-  font-size: 4rem;
+  font-size: 1rem;
   font-weight: bold;
 }

@@ -35,7 +35,6 @@ export function ProductsProvider({ children }: ProductProviderProps) {
     try {
       const { data } = await api.get("/");
       setProducts(data.items);
-      console.log(data.items);
       setDeliveryTax(data.delivery_tax);
     } catch (error) {
       console.log(error);

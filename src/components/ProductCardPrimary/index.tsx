@@ -11,9 +11,13 @@ interface ProductProviderProps {
 export function ProductCardPrimary({ product }: ProductProviderProps) {
   return (
     <div className={styles.container}>
-      <div className={styles.tagPromotion}>
-        <img src="/images/tag.png" />
-      </div>
+      {product.promotion ? (
+        <div className={styles.tagPromotion}>
+          <img src="/images/tag.png" />
+        </div>
+      ) : (
+        <></>
+      )}
       <div className={styles.imageProduct}>
         <img src={product.image} />
       </div>
@@ -24,14 +28,31 @@ export function ProductCardPrimary({ product }: ProductProviderProps) {
           {product.offer ? (
             <>
               <div className={styles.fullprice}>
-                De: <s style={{ color: "red" }}>{product.price}</s> Por:
+                De:{" "}
+                <s style={{ color: "red" }}>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(product.price)}
+                </s>{" "}
+                Por:
               </div>
-              <div className={styles.offer}>{product.offer}</div>
+              <div className={styles.offer}>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(product.offer)}
+              </div>
             </>
           ) : (
             <>
               Por:
-              <div className={styles.offer}>{product.price}</div>
+              <div className={styles.offer}>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(product.price)}
+              </div>
             </>
           )}
         </div>
@@ -40,7 +61,7 @@ export function ProductCardPrimary({ product }: ProductProviderProps) {
         <button>
           <AiOutlineMinusCircle size={25} color="red" />
         </button>
-        <div className={styles.ammountProduct}>2</div>
+        <div className={styles.ammountProduct}>0</div>
         <button>
           <AiOutlinePlusCircle size={25} color="green" />
         </button>

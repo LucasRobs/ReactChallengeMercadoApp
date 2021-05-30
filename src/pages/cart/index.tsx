@@ -1,4 +1,6 @@
+import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
+import { BiArrowBack } from "react-icons/bi";
 
 import { ProductCardSecondary } from "../../components/ProductCardSecondary";
 import { ProductContext } from "../../contexts/ProductContext";
@@ -36,6 +38,13 @@ export default function Cart() {
             <button type="button">Finalizar Pedido</button>
           </div>
         </div>
+      </div>
+      <div className={styles.comeback}>
+        <button>
+          <Link href="/">
+            <BiArrowBack size={50} />
+          </Link>
+        </button>
       </div>
     </>
   );
