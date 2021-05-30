@@ -1,27 +1,39 @@
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
+import { ProductProps } from "../../contexts/ProductContext";
 
 import styles from "./styles.module.scss";
 
-export function ProductCardPrimary() {
+interface ProductProviderProps {
+  product: ProductProps;
+}
+
+export function ProductCardPrimary({ product }: ProductProviderProps) {
   return (
     <div className={styles.container}>
       <div className={styles.tagPromotion}>
         <img src="/images/tag.png" />
       </div>
       <div className={styles.imageProduct}>
-        <img src="/images/abacaxi.png" />
+        <img src={product.image} />
       </div>
 
       <div className={styles.infoProduct}>
-        <div className={styles.nameProduct}>
-          ABSORVENTE ALWAYS PROTETOR DIARIO LEVE 40 PAGUE 35 UNIDADES
-        </div>
+        <div className={styles.nameProduct}>{product.description}</div>
         <div className={styles.priceProduct}>
-          <div className={styles.fullprice}>
-            <s>R$6,50</s>
-          </div>
-          <div className={styles.offer}> R$3,40</div>
+          {product.offer ? (
+            <>
+              <div className={styles.fullprice}>
+                De: <s style={{ color: "red" }}>{product.price}</s> Por:
+              </div>
+              <div className={styles.offer}>{product.offer}</div>
+            </>
+          ) : (
+            <>
+              Por:
+              <div className={styles.offer}>{product.price}</div>
+            </>
+          )}
         </div>
       </div>
       <div className={styles.buttonsProduct}>

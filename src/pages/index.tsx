@@ -16,7 +16,7 @@ export default function Products() {
 
   function changeStateProductDetailModal() {
     setProductDetailModalOpen(!productDetailModalOpen);
-    //console.log(products);
+    console.log(products);
   }
 
   return (
@@ -26,7 +26,7 @@ export default function Products() {
         {products ? (
           <>
             {products.map((product: ProductProps) => (
-              <ProductCardPrimary key={product.id} />
+              <ProductCardPrimary key={product.id} product={product} />
             ))}
           </>
         ) : (
