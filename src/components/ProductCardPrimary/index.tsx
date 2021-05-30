@@ -1,12 +1,17 @@
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
-import { ProtudoAttributeProps } from "../../contexts/ProductContext";
-import { ProductContext } from "../../contexts/ProductContext";
+import {
+  ProtudoAttributeProps,
+  ProductContext,
+} from "../../contexts/ProductContext";
+import { CartContext } from "../../contexts/CartContext";
 import { useContext } from "react";
 import styles from "./styles.module.scss";
 
 export function ProductCardPrimary({ product }: ProtudoAttributeProps) {
   const { openProductDetailModal } = useContext(ProductContext);
+  const { addProductToCart, removeProductFromCart } = useContext(CartContext);
+
   return (
     <div className={styles.container}>
       <button
@@ -61,11 +66,11 @@ export function ProductCardPrimary({ product }: ProtudoAttributeProps) {
         </div>
       </button>
       <div className={styles.buttonsProduct}>
-        <button>
+        <button onClick={() => removeProductFromCart(product.id)}>
           <AiOutlineMinusCircle size={25} color="red" />
         </button>
         <div className={styles.ammountProduct}>0</div>
-        <button>
+        <button onClick={() => addProductToCart({ product })}>
           <AiOutlinePlusCircle size={25} color="green" />
         </button>
       </div>

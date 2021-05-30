@@ -1,4 +1,5 @@
 import { createContext, useState, ReactNode, useEffect } from "react";
+
 import api from "../services/api";
 
 export interface ProtudoAttributeProps {
@@ -40,6 +41,7 @@ export function ProductsProvider({ children }: ProductProviderProps) {
   const [deliveryTax, setDeliveryTax] = useState<number>();
   const [productDetailModalOpen, setProductDetailModalOpen] = useState(false);
   const [productOnModal, setProductOnModal] = useState<ProductProps>(null);
+  const [productsOnCart, setProductsOnCart] = useState<ProductProps[]>([]);
 
   function openProductDetailModal({ product }: ProtudoAttributeProps) {
     setProductOnModal(product);
@@ -58,7 +60,7 @@ export function ProductsProvider({ children }: ProductProviderProps) {
       setProducts(data.items);
       setDeliveryTax(data.delivery_tax);
     } catch (error) {
-      console.log(error);
+      throw new ErrorEvent(error);
     }
   }
 

@@ -2,8 +2,8 @@ import { AppProps } from "next/app";
 import { Header } from "../components/Header";
 import Head from "next/head";
 import "../styles/global.scss";
-import { ProductsProvider, ProductContext } from "../contexts/ProductContext";
-
+import { ProductsProvider } from "../contexts/ProductContext";
+import { CartProvider } from "../contexts/CartContext";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -11,8 +11,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Supermercado Show</title>
       </Head>
       <ProductsProvider>
-        <Header />
-        <Component {...pageProps} />
+        <CartProvider>
+          <Header />
+          <Component {...pageProps} />
+        </CartProvider>
       </ProductsProvider>
     </>
   );

@@ -1,7 +1,6 @@
 import { Carousel } from "react-responsive-carousel";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import styles from "./styles.module.scss";
 
 const slideImages = [
   "images/slider/slider1.webp",
