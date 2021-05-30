@@ -1,7 +1,9 @@
 .productsContainer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
   align-items: center;
   justify-content: center;
   margin: 10px auto;
-  width: 85%;
+  width: 80%;
 }

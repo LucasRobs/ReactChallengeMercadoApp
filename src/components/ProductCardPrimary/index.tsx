@@ -14,7 +14,9 @@ export function ProductCardPrimary() {
       </div>
 
       <div className={styles.infoProduct}>
-        <div className={styles.nameProduct}>Abacaxi</div>
+        <div className={styles.nameProduct}>
+          ABSORVENTE ALWAYS PROTETOR DIARIO LEVE 40 PAGUE 35 UNIDADES
+        </div>
         <div className={styles.priceProduct}>
           <div className={styles.fullprice}>
             <s>R$6,50</s>

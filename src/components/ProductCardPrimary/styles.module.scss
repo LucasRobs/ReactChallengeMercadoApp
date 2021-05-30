@@ -1,9 +1,10 @@
 .container {
   background-color: white;
   width: 20%;
-  margin: 0 2.5%;
+  min-width: 200px;
   border: 1px solid var(--gray-300);
   border-radius: 5%;
+  margin-bottom: 10px;
 }
 
 .imageProduct {

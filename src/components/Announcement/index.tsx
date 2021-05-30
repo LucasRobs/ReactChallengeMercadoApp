@@ -1,5 +1,6 @@
-import { Slide } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+import { Carousel } from "react-responsive-carousel";
+
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import styles from "./styles.module.scss";
 
 const slideImages = [
@@ -9,21 +10,12 @@ const slideImages = [
 
 export function Announcement() {
   return (
-    <div className="slide-container">
-      <Slide>
-        <div className="each-slide">
-          <div
-            className={styles.image}
-            style={{ backgroundImage: `url(${slideImages[0]})` }}
-          />
+    <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false}>
+      {slideImages.map((image) => (
+        <div>
+          <img src={image} />
         </div>
-        <div className="each-slide">
-          <div
-            className={styles.image}
-            style={{ backgroundImage: `url(${slideImages[1]})` }}
-          />
-        </div>
-      </Slide>
-    </div>
+      ))}
+    </Carousel>
   );
 }

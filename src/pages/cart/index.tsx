@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
-import { Header } from "../../components/Header";
 import { ProductCardSecondary } from "../../components/ProductCardSecondary";
+import { ProductContext } from "../../contexts/ProductContext";
+
 import styles from "./styles.module.scss";
 
 export default function Cart() {
+  const { deliveryTax } = useContext(ProductContext);
   return (
     <>
-      <Header />
       <div className={styles.cartContainer}>
         <div className={styles.leftContainerArea}>
           <ProductCardSecondary />
@@ -21,7 +22,7 @@ export default function Cart() {
               <div>Subtotal:</div> <div>R$5,50</div>
             </div>
             <div className={styles.values}>
-              <div>Taxa de Entrega:</div> <div>R$8,50</div>
+              <div>Taxa de Entrega:</div> <div>R${deliveryTax}</div>
             </div>
             <div className={styles.values}>
               <div>Economia:</div> <div>- R$3,50</div>
