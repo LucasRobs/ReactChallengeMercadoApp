@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-
-import api from "../services/api";
+import React, { useContext } from "react";
 
 import { ProductCardPrimary } from "../components/ProductCardPrimary";
 import { Announcement } from "../components/Announcement";
@@ -11,13 +9,8 @@ import { ProductContext, ProductProps } from "../contexts/ProductContext";
 import styles from "./styles.module.scss";
 
 export default function Products() {
-  const { products } = useContext(ProductContext);
-  const [productDetailModalOpen, setProductDetailModalOpen] = useState(false);
-
-  function changeStateProductDetailModal() {
-    setProductDetailModalOpen(!productDetailModalOpen);
-    console.log(products);
-  }
+  const { productDetailModalOpen, closeProductDetailModal, products } =
+    useContext(ProductContext);
 
   return (
     <>
@@ -33,13 +26,9 @@ export default function Products() {
           <>pera ae garai</>
         )}
       </div>
-      <button type="button" onClick={changeStateProductDetailModal}>
-        Open Modal
-      </button>
-
       <ModalProductDetail
         isOpen={productDetailModalOpen}
-        changeStateModal={changeStateProductDetailModal}
+        closeModal={closeProductDetailModal}
       />
     </>
   );

@@ -1,3 +1,6 @@
+import React, { useContext } from "react";
+import { ProductContext } from "../../contexts/ProductContext";
+
 import Modal from "react-modal";
 import styles from "./styles.module.scss";
 
@@ -9,47 +12,60 @@ import {
 
 interface ModalProps {
   isOpen: boolean;
-  changeStateModal: () => void;
+  closeModal: () => void;
 }
 export function ModalProductDetail(modalProps: ModalProps) {
-  const { isOpen, changeStateModal } = modalProps;
+  const { productOnModal } = useContext(ProductContext);
+  const { isOpen, closeModal } = modalProps;
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={changeStateModal}
+      onRequestClose={closeModal}
       overlayClassName={styles.reactModalOverlay}
       className={styles.reactModalContent}
     >
-      <button className={styles.buttonCloseModal} onClick={changeStateModal}>
+      <button className={styles.buttonCloseModal} onClick={closeModal}>
         <AiOutlineClose size={25} />
       </button>
 
       <div className={styles.imageProduct}>
-        <img src="/images/abacaxi.png" />
+        <img src={productOnModal.image} />
       </div>
       <div className={styles.rightInformation}>
         <div className={styles.infoProduct}>
-          <div className={styles.nameProduct}>
-            ABSORVENTE ALWAYS PROTETOR DIARIO LEVE 40 PAGUE 35 UNIDADES
-          </div>
-          <div className={styles.price}>
-            <div className={styles.fullprice}>
-              De:{" "}
-              <s style={{ color: "red" }}>
+          <div className={styles.nameProduct}>{productOnModal.description}</div>
+          {productOnModal.offer ? (
+            <div className={styles.price}>
+              <div className={styles.fullprice}>
+                De:{" "}
+                <s style={{ color: "red" }}>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(productOnModal.price)}
+                </s>{" "}
+                Por:
+              </div>
+              <div className={styles.offer}>
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
-                }).format(3.4)}
-              </s>{" "}
-              Por:
+                }).format(productOnModal.offer)}
+              </div>
             </div>
-            <div className={styles.offer}>
-              {new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              }).format(2.3)}
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className={styles.price}>
+                <div className={styles.fullprice}>Por:</div>
+                <div className={styles.offer}>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(productOnModal.price)}
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div className={styles.buttonsProduct}>
           <button>
@@ -60,13 +76,18 @@ export function ModalProductDetail(modalProps: ModalProps) {
             <AiOutlinePlusCircle size={25} color="green" />
           </button>
         </div>
-        <div className={styles.infoPromotion}>
-          3 unidades gratis
-          <div className={styles.discount}>Meu desconto</div>
-          <div className={styles.numbers}>
-            LEVE <span>4</span> PAGUE <span>3</span>
+        {productOnModal.promotion ? (
+          <div className={styles.infoPromotion}>
+            3 unidades gratis
+            <div className={styles.discount}>Meu desconto</div>
+            <div className={styles.numbers}>
+              LEVE <span>{productOnModal.promotion.value}</span> PAGUE{" "}
+              <span>{productOnModal.promotion.base}</span>
+            </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
     </Modal>
   );
