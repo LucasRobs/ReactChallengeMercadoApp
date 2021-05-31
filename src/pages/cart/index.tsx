@@ -1,8 +1,10 @@
-import Link from "next/link";
 import React, { useState, useEffect, useContext } from "react";
+import Link from "next/link";
+
 import { BiArrowBack } from "react-icons/bi";
 
 import { ProductCardSecondary } from "../../components/ProductCardSecondary";
+
 import { ProductContext, ProductProps } from "../../contexts/ProductContext";
 import { CartContext } from "../../contexts/CartContext";
 
@@ -12,18 +14,15 @@ export default function Cart() {
   const [productsOnCart, setProductsOnCart] = useState<ProductProps[]>([]);
 
   useEffect(() => {
-    (async () => {
-      await updatePurchaseValues();
-    })();
-  }, []);
-
-  useEffect(() => {
     loadProductIntoCart().then((productsInLocalStorage) => {
       const productsData = Object.keys(productsInLocalStorage).map(
         (key) => productsInLocalStorage[key].data
       );
       setProductsOnCart(productsData);
     });
+    (async () => {
+      await updatePurchaseValues();
+    })();
   }, []);
 
   const { deliveryTax } = useContext(ProductContext);

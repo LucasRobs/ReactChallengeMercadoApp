@@ -69,10 +69,7 @@ export function CartProvider({ children }: CartProviderProps) {
   async function productExisteOnCart(id: string): Promise<boolean> {
     try {
       const productsOnCart = await loadProductIntoCart();
-      const idProduct = Object.keys(productsOnCart).find((idProduct) => {
-        idProduct == id;
-      });
-      return idProduct ? true : false;
+      return productsOnCart[id] ? true : false;
     } catch (error) {
       throw new ErrorEvent(error);
     }
@@ -84,6 +81,7 @@ export function CartProvider({ children }: CartProviderProps) {
     try {
       const productsOnCart = await loadProductIntoCart();
       const id = product.id as string;
+
       if (await productExisteOnCart(id)) {
         let availableStock = 0;
         const product = productsOnCart[id].data;
@@ -152,7 +150,7 @@ export function CartProvider({ children }: CartProviderProps) {
     let totalWithDiscount = 0;
     Object.keys(products).map((key) => {
       const product = products[key];
-      products[key].data.offer
+      product.data.offer
         ? (totalWithDiscount += product.data.offer * product.amount)
         : (totalWithDiscount += product.data.price * product.amount);
     });

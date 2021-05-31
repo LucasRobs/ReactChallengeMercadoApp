@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ProductContext, ProductProps } from "../../contexts/ProductContext";
+import { ProductContext } from "../../contexts/ProductContext";
 
 import Modal from "react-modal";
 import styles from "./styles.module.scss";
@@ -17,6 +17,7 @@ interface ModalProps {
 }
 export function ModalProductDetail(modalProps: ModalProps) {
   const [amount, setAmount] = useState(0);
+
   const {
     addProductToCart,
     removeProductFromCart,
@@ -24,14 +25,15 @@ export function ModalProductDetail(modalProps: ModalProps) {
     reloadAmount,
   } = useContext(CartContext);
   const { productOnModal } = useContext(ProductContext);
+
   const { isOpen, closeModal } = modalProps;
 
   useEffect(() => {
     if (productOnModal)
-      getProductAmount(productOnModal.id).then((qtd) => {
-        setAmount(qtd);
+      getProductAmount(productOnModal.id).then((amount) => {
+        setAmount(amount);
       });
-  }, [reloadAmount]);
+  }, [reloadAmount, isOpen]);
 
   return (
     <Modal

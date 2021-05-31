@@ -1,11 +1,14 @@
+import { useContext, useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
+import { FaCartPlus } from "react-icons/fa";
+
 import {
   ProtudoAttributeProps,
   ProductContext,
 } from "../../contexts/ProductContext";
 import { CartContext } from "../../contexts/CartContext";
-import { useContext, useEffect, useState } from "react";
+
 import styles from "./styles.module.scss";
 
 export function ProductCardPrimary({ product }: ProtudoAttributeProps) {
@@ -78,15 +81,23 @@ export function ProductCardPrimary({ product }: ProtudoAttributeProps) {
           </div>
         </div>
       </button>
-      <div className={styles.buttonsProduct}>
-        <button onClick={() => removeProductFromCart(product.id)}>
-          <AiOutlineMinusCircle size={25} color="red" />
-        </button>
-        <div className={styles.ammountProduct}>{amount}</div>
-        <button onClick={() => addProductToCart({ product })}>
-          <AiOutlinePlusCircle size={25} color="green" />
-        </button>
-      </div>
+      {amount === 0 ? (
+        <div className={styles.buttonsProductAdd}>
+          <button onClick={() => addProductToCart({ product })}>
+            <FaCartPlus size={25} /> <> Adicionar ao carrinho</>
+          </button>
+        </div>
+      ) : (
+        <div className={styles.buttonsProduct}>
+          <button onClick={() => removeProductFromCart(product.id)}>
+            <AiOutlineMinusCircle size={25} color="red" />
+          </button>
+          <div className={styles.ammountProduct}>{amount}</div>
+          <button onClick={() => addProductToCart({ product })}>
+            <AiOutlinePlusCircle size={25} color="green" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

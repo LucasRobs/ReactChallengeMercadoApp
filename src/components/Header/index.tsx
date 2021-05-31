@@ -1,17 +1,18 @@
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import styles from "./style.module.scss";
+
 import { Cart } from "../Cart";
-import { useContext, useEffect } from "react";
 import { CartContext } from "../../contexts/CartContext";
 
 export function Header() {
   const { totalAmount, updateTotalAmount } = useContext(CartContext);
-
   useEffect(() => {
     (async () => {
       await updateTotalAmount();
     })();
   }, []);
+
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>

@@ -3,10 +3,6 @@ import { FaShoppingCart } from "react-icons/fa";
 
 import styles from "./styles.module.scss";
 
-interface ModalProps {
-  value: number;
-}
-
 export function Cart({ value }) {
   return (
     <div className={styles.cart}>

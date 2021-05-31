@@ -1,8 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+
 import { CartContext } from "../../contexts/CartContext";
 import { ProtudoAttributeProps } from "../../contexts/ProductContext";
+
 import styles from "./styles.module.scss";
+
 export function ProductCardSecondary({ product }: ProtudoAttributeProps) {
   const [amount, setAmount] = useState(0);
 

@@ -9,18 +9,18 @@
 
 .imageProduct {
   justify-content: center;
-
+  padding-top: 0.5rem;
   img {
-    width: 100%;
-    height: 200px;
+    height: 175px;
+    margin: 0 auto;
   }
 }
 
 .tagPromotion {
   position: absolute;
   img {
-    width: 30%;
-    height: 30%;
+    width: 90px;
+    height: 90px;
   }
 }
 
@@ -61,10 +61,25 @@
     width: 30%;
   }
 }
+.buttonsProductAdd {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+
+  button {
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--gray-300);
+    color: var(--green);
+    align-content: center;
+  }
+}
 
 .modalButton {
   background: transparent;
   width: 200px;
   border: none;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
