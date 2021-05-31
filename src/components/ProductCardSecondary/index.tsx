@@ -41,13 +41,15 @@ export function ProductCardSecondary({ product }: ProtudoAttributeProps) {
                       currency: "BRL",
                     }).format(product.price)}
                   </s>{" "}
-                  Por:
-                </div>
-                <div className={styles.offer}>
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(product.offer)}
+                  <div className={styles.offer}>
+                    <text>
+                      Por:
+                      {new Intl.NumberFormat("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      }).format(product.offer)}
+                    </text>
+                  </div>
                 </div>
               </>
             ) : (
