@@ -91,7 +91,10 @@ export function CartProvider({ children }: CartProviderProps) {
         } else {
           availableStock = product.stock;
         }
-        if (availableStock <= productsOnCart[id].amount) return;
+        if (availableStock <= productsOnCart[id].amount) {
+          alert("Não temos mais desse produto em estoque.");
+          return;
+        }
         productsOnCart[id].amount++;
         saveOnLocalStorage(productsOnCart);
         return;
