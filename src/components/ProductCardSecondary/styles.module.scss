@@ -22,7 +22,7 @@
   width: 100%;
   .nameProduct {
     height: 50%;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: rajdhani;
   }
 
@@ -57,5 +57,25 @@
   .ammountProduct {
     text-align: center;
     height: 20%;
+  }
+}
+
+.infoPromotion {
+  text-align: right;
+
+  .discount {
+    color: var(--green);
+    text-align: center;
+  }
+
+  .numbers {
+    font-family: rajdhani;
+    font-size: 1.4rem;
+    color: var(--green);
+    text-align: center;
+
+    span {
+      font-weight: bold;
+    }
   }
 }

@@ -43,11 +43,8 @@ export function CartProvider({ children }: CartProviderProps) {
   async function getProductAmount(id: string): Promise<number> {
     try {
       const productsOnCart = await loadProductIntoCart();
-      let amount = 0;
-      Object.keys(productsOnCart).find((idProduct) => {
-        idProduct == id ? (amount = productsOnCart[idProduct].amount) : {};
-      });
-      return amount;
+      const product = productsOnCart[id];
+      return product ? product.amount : 0;
     } catch (error) {
       throw new ErrorEvent(error);
     }

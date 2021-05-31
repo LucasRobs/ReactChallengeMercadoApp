@@ -3,20 +3,39 @@ import React, { useState, useEffect, useContext } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
 import { ProductCardSecondary } from "../../components/ProductCardSecondary";
-import { ProductContext } from "../../contexts/ProductContext";
+import { ProductContext, ProductProps } from "../../contexts/ProductContext";
+import { CartContext } from "../../contexts/CartContext";
 
 import styles from "./styles.module.scss";
 
 export default function Cart() {
+  const [productsOnCart, setProductsOnCart] = useState<ProductProps[]>([]);
+
+  useEffect(() => {
+    loadProductIntoCart().then((productsInLocalStorage) => {
+      const productsData = Object.keys(productsInLocalStorage).map(
+        (key) => productsInLocalStorage[key].data
+      );
+      setProductsOnCart(productsData);
+    });
+  }, []);
+
   const { deliveryTax } = useContext(ProductContext);
+  const { loadProductIntoCart } = useContext(CartContext);
+
   return (
     <>
       <div className={styles.cartContainer}>
         <div className={styles.leftContainerArea}>
-          <ProductCardSecondary />
-          <ProductCardSecondary />
-          <ProductCardSecondary />
-          <ProductCardSecondary />
+          {productsOnCart ? (
+            <>
+              {productsOnCart.map((product: ProductProps) => (
+                <ProductCardSecondary key={product.id} product={product} />
+              ))}
+            </>
+          ) : (
+            <>pera ae garai</>
+          )}
         </div>
         <div className={styles.rightContainerArea}>
           <div className={styles.valuesInformation}>
