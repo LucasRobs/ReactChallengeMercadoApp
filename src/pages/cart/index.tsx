@@ -12,6 +12,12 @@ export default function Cart() {
   const [productsOnCart, setProductsOnCart] = useState<ProductProps[]>([]);
 
   useEffect(() => {
+    (async () => {
+      await updatePurchaseValues();
+    })();
+  }, []);
+
+  useEffect(() => {
     loadProductIntoCart().then((productsInLocalStorage) => {
       const productsData = Object.keys(productsInLocalStorage).map(
         (key) => productsInLocalStorage[key].data
@@ -21,7 +27,13 @@ export default function Cart() {
   }, []);
 
   const { deliveryTax } = useContext(ProductContext);
-  const { loadProductIntoCart } = useContext(CartContext);
+  const {
+    loadProductIntoCart,
+    updatePurchaseValues,
+    subTotal,
+    discaunt,
+    total,
+  } = useContext(CartContext);
 
   return (
     <>
@@ -40,17 +52,42 @@ export default function Cart() {
         <div className={styles.rightContainerArea}>
           <div className={styles.valuesInformation}>
             <div className={styles.values}>
-              <div>Subtotal:</div> <div>R$5,50</div>
+              <div>Subtotal:</div>{" "}
+              <div>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(subTotal)}
+              </div>
             </div>
             <div className={styles.values}>
-              <div>Taxa de Entrega:</div> <div>R${deliveryTax}</div>
+              <div>Taxa de Entrega:</div>{" "}
+              <div>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(deliveryTax)}
+              </div>
             </div>
             <div className={styles.values}>
-              <div>Economia:</div> <div>- R$3,50</div>
+              <div>Desconto:</div>{" "}
+              <div>
+                -{" "}
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(discaunt)}
+              </div>
             </div>
             <hr />
             <div className={styles.values}>
-              <div>Total:</div> <div>R$14,00</div>
+              <div>Total:</div>{" "}
+              <div>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(total)}
+              </div>
             </div>
           </div>
           <div className={styles.checkOut}>

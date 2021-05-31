@@ -73,12 +73,12 @@ export function ProductCardSecondary({ product }: ProtudoAttributeProps) {
         </div>
       </div>
       <div className={styles.buttonsProduct}>
-        <button onClick={() => removeProductFromCart(product.id)}>
-          <AiOutlineMinusCircle size={25} color="red" />
-        </button>
-        <div className={styles.ammountProduct}>{amount}</div>
         <button onClick={() => addProductToCart({ product })}>
           <AiOutlinePlusCircle size={25} color="green" />
+        </button>
+        <div className={styles.ammountProduct}>{amount}</div>
+        <button onClick={() => removeProductFromCart(product.id)}>
+          <AiOutlineMinusCircle size={25} color="red" />
         </button>
       </div>
     </div>

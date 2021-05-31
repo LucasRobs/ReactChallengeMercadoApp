@@ -1,8 +1,17 @@
 import Link from "next/link";
 import styles from "./style.module.scss";
 import { Cart } from "../Cart";
+import { useContext, useEffect } from "react";
+import { CartContext } from "../../contexts/CartContext";
 
 export function Header() {
+  const { totalAmount, updateTotalAmount } = useContext(CartContext);
+
+  useEffect(() => {
+    (async () => {
+      await updateTotalAmount();
+    })();
+  }, []);
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
@@ -14,7 +23,7 @@ export function Header() {
         <div className={styles.cart}>
           <Link href="/cart">
             <button className={styles.cartButton}>
-              <Cart value={10} />
+              <Cart value={totalAmount} />
             </button>
           </Link>
         </div>
