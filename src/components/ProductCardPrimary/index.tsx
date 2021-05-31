@@ -5,12 +5,25 @@ import {
   ProductContext,
 } from "../../contexts/ProductContext";
 import { CartContext } from "../../contexts/CartContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 
 export function ProductCardPrimary({ product }: ProtudoAttributeProps) {
+  const [amount, setAmount] = useState(0);
+
   const { openProductDetailModal } = useContext(ProductContext);
-  const { addProductToCart, removeProductFromCart } = useContext(CartContext);
+  const {
+    addProductToCart,
+    removeProductFromCart,
+    getProductAmount,
+    reloadAmount,
+  } = useContext(CartContext);
+
+  useEffect(() => {
+    getProductAmount(product.id).then((qtd) => {
+      setAmount(qtd);
+    });
+  }, [reloadAmount]);
 
   return (
     <div className={styles.container}>
@@ -69,7 +82,7 @@ export function ProductCardPrimary({ product }: ProtudoAttributeProps) {
         <button onClick={() => removeProductFromCart(product.id)}>
           <AiOutlineMinusCircle size={25} color="red" />
         </button>
-        <div className={styles.ammountProduct}>0</div>
+        <div className={styles.ammountProduct}>{amount}</div>
         <button onClick={() => addProductToCart({ product })}>
           <AiOutlinePlusCircle size={25} color="green" />
         </button>

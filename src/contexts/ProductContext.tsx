@@ -40,8 +40,7 @@ export function ProductsProvider({ children }: ProductProviderProps) {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [deliveryTax, setDeliveryTax] = useState<number>();
   const [productDetailModalOpen, setProductDetailModalOpen] = useState(false);
-  const [productOnModal, setProductOnModal] = useState<ProductProps>(null);
-  const [productsOnCart, setProductsOnCart] = useState<ProductProps[]>([]);
+  const [productOnModal, setProductOnModal] = useState<ProductProps>();
 
   function openProductDetailModal({ product }: ProtudoAttributeProps) {
     setProductOnModal(product);

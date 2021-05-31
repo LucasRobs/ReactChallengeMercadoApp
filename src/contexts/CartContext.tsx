@@ -1,10 +1,13 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { ProductProps, ProtudoAttributeProps } from "./ProductContext";
 
 interface CartContextData {
+  reloadAmount: boolean;
   addProductToCart: (ProtudoAttributeProps) => Promise<void>;
-  loadProductIntoCart: () => Promise<StorageProductProps[]>;
+  loadProductIntoCart: () => Promise<StorageProductProps>;
   removeProductFromCart: (id: string) => Promise<void>;
+  productExisteOnCart: (id: string) => Promise<Boolean>;
+  getProductAmount: (id: string) => Promise<number>;
 }
 
 interface CartProviderProps {
@@ -21,6 +24,8 @@ export interface StorageProductProps {
 export const CartContext = createContext({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
+  const [reloadAmount, setReloadAmount] = useState<boolean>();
+
   async function saveOnLocalStorage(
     products: StorageProductProps
   ): Promise<void> {
@@ -29,31 +34,47 @@ export function CartProvider({ children }: CartProviderProps) {
         "@SuperMarket:products",
         JSON.stringify({ ...products })
       );
+      setReloadAmount(!reloadAmount);
     } catch (error) {
       throw new ErrorEvent(error);
     }
   }
 
-  async function productExiste(id: string): Promise<boolean> {
-    const data = await localStorage.getItem("@SuperMarket:products");
-    const oldProducts = data ? (JSON.parse(data) as StorageProductProps) : {};
-    let existe = false;
-    Object.keys(oldProducts).find((oldProduct) => {
-      oldProduct == id ? (existe = true) : {};
-    });
-    if (existe) return true;
-    else return false;
+  async function getProductAmount(id: string): Promise<number> {
+    try {
+      const productsOnCart = await loadProductIntoCart();
+      let amount = 0;
+      Object.keys(productsOnCart).find((idProduct) => {
+        idProduct == id ? (amount = productsOnCart[idProduct].amount) : {};
+      });
+      return amount;
+    } catch (error) {
+      throw new ErrorEvent(error);
+    }
+  }
+
+  async function productExisteOnCart(id: string): Promise<boolean> {
+    try {
+      const productsOnCart = await loadProductIntoCart();
+      let existe = false;
+      Object.keys(productsOnCart).find((idProduct) => {
+        idProduct == id ? (existe = true) : {};
+      });
+      if (existe) return true;
+      return false;
+    } catch (error) {
+      throw new ErrorEvent(error);
+    }
   }
 
   async function addProductToCart({
     product,
   }: ProtudoAttributeProps): Promise<void> {
     try {
-      const data = await localStorage.getItem("@SuperMarket:products");
-      const oldProducts = data ? (JSON.parse(data) as StorageProductProps) : {};
-      if (await productExiste(product.id as string)) {
-        oldProducts[product.id as string].amount++;
-        saveOnLocalStorage(oldProducts);
+      const productsOnCart = await loadProductIntoCart();
+      if (await productExisteOnCart(product.id as string)) {
+        productsOnCart[product.id as string].amount++;
+        saveOnLocalStorage(productsOnCart);
         return;
       }
       const newProduct = {
@@ -62,16 +83,16 @@ export function CartProvider({ children }: CartProviderProps) {
           amount: 1,
         },
       };
-      saveOnLocalStorage({ ...newProduct, ...oldProducts });
+      saveOnLocalStorage({ ...newProduct, ...productsOnCart });
     } catch (error) {
       throw new ErrorEvent(error);
     }
   }
 
-  async function loadProductIntoCart(): Promise<StorageProductProps[]> {
+  async function loadProductIntoCart(): Promise<StorageProductProps> {
     try {
       const data = await localStorage.getItem("@SuperMarket:products");
-      const products = JSON.parse(data) as StorageProductProps[];
+      const products = JSON.parse(data) as StorageProductProps;
       return products;
     } catch (error) {
       throw new ErrorEvent(error);
@@ -81,15 +102,20 @@ export function CartProvider({ children }: CartProviderProps) {
   async function removeProductFromCart(id: string): Promise<void> {
     const data = await localStorage.getItem("@SuperMarket:products");
     const Products = data ? (JSON.parse(data) as StorageProductProps) : {};
+    if (!Products[id]) return;
     Products[id].amount > 1 ? Products[id].amount-- : delete Products[id];
-    await localStorage.setItem(
-      "@SuperMarket:products",
-      JSON.stringify(Products)
-    );
+    await saveOnLocalStorage(Products);
   }
   return (
     <CartContext.Provider
-      value={{ addProductToCart, loadProductIntoCart, removeProductFromCart }}
+      value={{
+        reloadAmount,
+        addProductToCart,
+        loadProductIntoCart,
+        removeProductFromCart,
+        productExisteOnCart,
+        getProductAmount,
+      }}
     >
       {children}
     </CartContext.Provider>

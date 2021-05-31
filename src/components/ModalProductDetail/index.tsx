@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { ProductContext } from "../../contexts/ProductContext";
+import React, { useContext, useEffect, useState } from "react";
+import { ProductContext, ProductProps } from "../../contexts/ProductContext";
 
 import Modal from "react-modal";
 import styles from "./styles.module.scss";
@@ -9,14 +9,30 @@ import {
   AiOutlinePlusCircle,
   AiOutlineClose,
 } from "react-icons/ai";
+import { CartContext } from "../../contexts/CartContext";
 
 interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;
 }
 export function ModalProductDetail(modalProps: ModalProps) {
+  const [amount, setAmount] = useState(0);
+  const {
+    addProductToCart,
+    removeProductFromCart,
+    getProductAmount,
+    reloadAmount,
+  } = useContext(CartContext);
   const { productOnModal } = useContext(ProductContext);
   const { isOpen, closeModal } = modalProps;
+
+  useEffect(() => {
+    if (productOnModal)
+      getProductAmount(productOnModal.id).then((qtd) => {
+        setAmount(qtd);
+      });
+  }, [reloadAmount]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -71,11 +87,13 @@ export function ModalProductDetail(modalProps: ModalProps) {
               )}
             </div>
             <div className={styles.buttonsProduct}>
-              <button>
+              <button onClick={() => removeProductFromCart(productOnModal.id)}>
                 <AiOutlineMinusCircle size={25} color="red" />
               </button>
-              <div className={styles.ammountProduct}>2</div>
-              <button>
+              <div className={styles.ammountProduct}>{amount}</div>
+              <button
+                onClick={() => addProductToCart({ product: productOnModal })}
+              >
                 <AiOutlinePlusCircle size={25} color="green" />
               </button>
             </div>
