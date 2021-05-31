@@ -1,15 +1,15 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import {
-  ProductContext,
   ProductProps,
+  ProductContext,
   ProtudoAttributeProps,
 } from "./ProductContext";
 
 interface CartContextData {
-  totalAmount: number;
-  subTotal: number;
-  discaunt: number;
   total: number;
+  discaunt: number;
+  subTotal: number;
+  totalAmount: number;
   reloadAmount: boolean;
   addProductToCart: (ProtudoAttributeProps) => Promise<void>;
   loadProductIntoCart: () => Promise<StorageProductProps>;
@@ -36,11 +36,11 @@ export const CartContext = createContext({} as CartContextData);
 export function CartProvider({ children }: CartProviderProps) {
   const { deliveryTax } = useContext(ProductContext);
 
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [reloadAmount, setReloadAmount] = useState(false);
-  const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [discaunt, setDiscount] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [reloadAmount, setReloadAmount] = useState(false);
 
   async function saveOnLocalStorage(
     products: StorageProductProps
@@ -69,12 +69,10 @@ export function CartProvider({ children }: CartProviderProps) {
   async function productExisteOnCart(id: string): Promise<boolean> {
     try {
       const productsOnCart = await loadProductIntoCart();
-      let existe = false;
-      Object.keys(productsOnCart).find((idProduct) => {
-        idProduct == id ? (existe = true) : {};
+      const idProduct = Object.keys(productsOnCart).find((idProduct) => {
+        idProduct == id;
       });
-      if (existe) return true;
-      return false;
+      return idProduct ? true : false;
     } catch (error) {
       throw new ErrorEvent(error);
     }
@@ -88,26 +86,26 @@ export function CartProvider({ children }: CartProviderProps) {
       const id = product.id as string;
       if (await productExisteOnCart(id)) {
         let availableStock = 0;
-        if (productsOnCart[id].data.promotion) {
+        const product = productsOnCart[id].data;
+        if (product.promotion) {
           availableStock =
-            productsOnCart[id].data.stock -
-            productsOnCart[id].data.stock /
-              productsOnCart[id].data.promotion.value;
+            product.stock - product.stock / product.promotion.value;
         } else {
-          availableStock = productsOnCart[id].data.stock;
+          availableStock = product.stock;
         }
         if (availableStock <= productsOnCart[id].amount) return;
         productsOnCart[id].amount++;
         saveOnLocalStorage(productsOnCart);
         return;
+      } else {
+        const newProduct = {
+          [product.id]: {
+            data: product,
+            amount: 1,
+          },
+        };
+        saveOnLocalStorage({ ...newProduct, ...productsOnCart });
       }
-      const newProduct = {
-        [product.id]: {
-          data: product,
-          amount: 1,
-        },
-      };
-      saveOnLocalStorage({ ...newProduct, ...productsOnCart });
     } catch (error) {
       throw new ErrorEvent(error);
     }
@@ -139,25 +137,34 @@ export function CartProvider({ children }: CartProviderProps) {
     setTotalAmount(summationAmmount);
   }
 
-  async function updatePurchaseValues(): Promise<void> {
+  async function getSubTotal(): Promise<number> {
     const products = await loadProductIntoCart();
     let summationSubTotal = 0;
     Object.keys(products).map(
       (key) =>
         (summationSubTotal += products[key].data.price * products[key].amount)
     );
-    setSubTotal(summationSubTotal);
-    let summationTotalWithDiscount = 0;
-    Object.keys(products).map((key) =>
-      products[key].data.offer
-        ? (summationTotalWithDiscount +=
-            products[key].data.offer * products[key].amount)
-        : (summationTotalWithDiscount +=
-            products[key].data.price * products[key].amount)
-    );
-    setDiscount(summationSubTotal - summationTotalWithDiscount);
+    return summationSubTotal;
+  }
 
-    setTotal(summationTotalWithDiscount + deliveryTax);
+  async function getTotalWithDiscount(): Promise<number> {
+    const products = await loadProductIntoCart();
+    let totalWithDiscount = 0;
+    Object.keys(products).map((key) => {
+      const product = products[key];
+      products[key].data.offer
+        ? (totalWithDiscount += product.data.offer * product.amount)
+        : (totalWithDiscount += product.data.price * product.amount);
+    });
+    return totalWithDiscount;
+  }
+
+  async function updatePurchaseValues(): Promise<void> {
+    const subTotal = await getSubTotal();
+    setSubTotal(subTotal);
+    const totalWithDiscount = await getTotalWithDiscount();
+    setDiscount(subTotal - totalWithDiscount);
+    setTotal(totalWithDiscount + deliveryTax);
   }
 
   async function updateData() {

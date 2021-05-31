@@ -8,12 +8,12 @@ export interface ProtudoAttributeProps {
 
 export interface ProductProps {
   id: string;
-  order_number: string;
-  stock: number;
   image: string;
-  description: string;
   price: number;
+  stock: number;
   offer?: number;
+  description: string;
+  order_number: string;
   promotion?: {
     kind: string;
     base: number;
@@ -22,12 +22,12 @@ export interface ProductProps {
 }
 
 interface ProductContextData {
-  products: ProductProps[];
   deliveryTax: number;
+  products: ProductProps[];
+  productOnModal: ProductProps;
   productDetailModalOpen: boolean;
   closeProductDetailModal: () => void;
   openProductDetailModal: (ProtudoAttributeProps) => void;
-  productOnModal: ProductProps;
 }
 
 interface ProductProviderProps {
@@ -37,21 +37,14 @@ interface ProductProviderProps {
 export const ProductContext = createContext({} as ProductContextData);
 
 export function ProductsProvider({ children }: ProductProviderProps) {
-  const [products, setProducts] = useState<ProductProps[]>([]);
   const [deliveryTax, setDeliveryTax] = useState<number>();
-  const [productDetailModalOpen, setProductDetailModalOpen] = useState(false);
+  const [products, setProducts] = useState<ProductProps[]>([]);
   const [productOnModal, setProductOnModal] = useState<ProductProps>();
+  const [productDetailModalOpen, setProductDetailModalOpen] = useState(false);
 
-  function openProductDetailModal({ product }: ProtudoAttributeProps) {
-    setProductOnModal(product);
-    setProductDetailModalOpen(true);
-    console.log(productDetailModalOpen);
-    console.log(product);
-  }
-
-  function closeProductDetailModal() {
-    setProductDetailModalOpen(false);
-  }
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   async function fetchProducts() {
     try {
@@ -63,19 +56,24 @@ export function ProductsProvider({ children }: ProductProviderProps) {
     }
   }
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  function openProductDetailModal({ product }: ProtudoAttributeProps) {
+    setProductOnModal(product);
+    setProductDetailModalOpen(true);
+  }
+
+  function closeProductDetailModal() {
+    setProductDetailModalOpen(false);
+  }
 
   return (
     <ProductContext.Provider
       value={{
         products,
         deliveryTax,
+        productOnModal,
         productDetailModalOpen,
         closeProductDetailModal,
         openProductDetailModal,
-        productOnModal,
       }}
     >
       {children}
