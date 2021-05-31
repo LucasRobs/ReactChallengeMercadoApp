@@ -63,14 +63,16 @@ export function ProductCardSecondary({ product }: ProtudoAttributeProps) {
             )}
           </div>
           {product.promotion ? (
-            <div className={styles.infoPromotion}>
-              <div className={styles.discount}>
-                {" "}
-                {Math.floor(amount / product.promotion.base)} unidades gratis
-              </div>
-              <div className={styles.numbers}>
-                LEVE <span>{product.promotion.value}</span> PAGUE{" "}
-                <span>{product.promotion.base}</span>
+            <div className={styles.containerPromotion}>
+              <div className={styles.infoPromotion}>
+                <div className={styles.discount}>
+                  {" "}
+                  {Math.floor(amount / product.promotion.base)} unidades gratis
+                </div>
+                <div className={styles.numbers}>
+                  LEVE <span>{product.promotion.value}</span> PAGUE{" "}
+                  <span>{product.promotion.base}</span>
+                </div>
               </div>
             </div>
           ) : (

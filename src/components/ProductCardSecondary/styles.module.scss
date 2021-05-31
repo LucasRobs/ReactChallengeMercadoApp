@@ -28,7 +28,7 @@
 
   .lowMiddleContainer {
     display: flex;
-    position: relative;
+    flex: 1;
     .priceProduct {
       height: 50%;
       .offer {
@@ -36,11 +36,9 @@
         font-size: 1.2rem;
       }
     }
-    .infoPromotion {
+    .containerPromotion {
       width: 100%;
-      text-align: center;
-      position: absolute;
-      bottom: 0;
+      justify-content: flex-end;
     }
   }
 }
@@ -70,7 +68,7 @@
 
   .numbers {
     font-family: rajdhani;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--green);
     text-align: center;
 

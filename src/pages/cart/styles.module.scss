@@ -13,13 +13,10 @@
     position: fixed;
     top: 90%;
     margin-left: 2rem;
-
     cursor: pointer;
     background: none;
     border: 0;
-
     transition: color 0.2ms;
-
     &:hover {
       color: var(--red);
       position: fixed;
