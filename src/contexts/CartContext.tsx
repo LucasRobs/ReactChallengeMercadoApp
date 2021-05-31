@@ -85,8 +85,19 @@ export function CartProvider({ children }: CartProviderProps) {
   }: ProtudoAttributeProps): Promise<void> {
     try {
       const productsOnCart = await loadProductIntoCart();
-      if (await productExisteOnCart(product.id as string)) {
-        productsOnCart[product.id as string].amount++;
+      const id = product.id as string;
+      if (await productExisteOnCart(id)) {
+        let availableStock = 0;
+        if (productsOnCart[id].data.promotion) {
+          availableStock =
+            productsOnCart[id].data.stock -
+            productsOnCart[id].data.stock /
+              productsOnCart[id].data.promotion.value;
+        } else {
+          availableStock = productsOnCart[id].data.stock;
+        }
+        if (availableStock <= productsOnCart[id].amount) return;
+        productsOnCart[id].amount++;
         saveOnLocalStorage(productsOnCart);
         return;
       }
@@ -106,7 +117,7 @@ export function CartProvider({ children }: CartProviderProps) {
     try {
       const data = await localStorage.getItem("@SuperMarket:products");
       const products = JSON.parse(data) as StorageProductProps;
-      return products;
+      return products ? products : {};
     } catch (error) {
       throw new ErrorEvent(error);
     }
@@ -159,8 +170,8 @@ export function CartProvider({ children }: CartProviderProps) {
     <CartContext.Provider
       value={{
         total,
-        subTotal,
         discaunt,
+        subTotal,
         totalAmount,
         reloadAmount,
         addProductToCart,

@@ -99,7 +99,8 @@ export function ModalProductDetail(modalProps: ModalProps) {
             </div>
             {productOnModal.promotion ? (
               <div className={styles.infoPromotion}>
-                3 unidades gratis
+                {Math.floor(amount / productOnModal.promotion.base)} unidades
+                gratis
                 <div className={styles.discount}>Meu desconto</div>
                 <div className={styles.numbers}>
                   LEVE <span>{productOnModal.promotion.value}</span> PAGUE{" "}
