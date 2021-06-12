@@ -132,9 +132,14 @@ export function CartProvider({ children }: CartProviderProps) {
   async function updateTotalAmount(): Promise<void> {
     const products = await loadProductIntoCart();
     let summationAmmount = 0;
-    Object.keys(products).map(
-      (key) => (summationAmmount += products[key].amount)
-    );
+    Object.keys(products).map((key) => {
+      if (products[key].data.promotion) {
+        const amountFreeProducts =
+          products[key].amount / products[key].data.promotion.base;
+        summationAmmount +=
+          products[key].amount + Math.floor(amountFreeProducts);
+      } else summationAmmount += products[key].amount;
+    });
     setTotalAmount(summationAmmount);
   }
 
