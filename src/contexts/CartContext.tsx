@@ -133,12 +133,14 @@ export function CartProvider({ children }: CartProviderProps) {
     const products = await loadProductIntoCart();
     let summationAmmount = 0;
     Object.keys(products).map((key) => {
-      if (products[key].data.promotion) {
-        const amountFreeProducts =
-          products[key].amount / products[key].data.promotion.base;
-        summationAmmount +=
-          products[key].amount + Math.floor(amountFreeProducts);
-      } else summationAmmount += products[key].amount;
+      const product = products[key];
+      if (product.data.promotion) {
+        let amountFreeProducts = getAmmountFreeProduct(
+          product.data,
+          product.amount
+        );
+        summationAmmount += product.amount + Math.floor(amountFreeProducts);
+      } else summationAmmount += product.amount;
     });
     setTotalAmount(summationAmmount);
   }
@@ -146,11 +148,24 @@ export function CartProvider({ children }: CartProviderProps) {
   async function getSubTotal(): Promise<number> {
     const products = await loadProductIntoCart();
     let summationSubTotal = 0;
-    Object.keys(products).map(
-      (key) =>
-        (summationSubTotal += products[key].data.price * products[key].amount)
-    );
+    Object.keys(products).map((key) => {
+      const product = products[key];
+      let amountFreeProducts = getAmmountFreeProduct(
+        product.data,
+        product.amount
+      );
+      summationSubTotal +=
+        products[key].data.price * (products[key].amount + amountFreeProducts);
+    });
     return summationSubTotal;
+  }
+
+  function getAmmountFreeProduct(
+    product: ProductProps,
+    amount: number
+  ): number {
+    if (product.promotion) return Math.floor(amount / product.promotion.base);
+    return 0;
   }
 
   async function getTotalWithDiscount(): Promise<number> {
