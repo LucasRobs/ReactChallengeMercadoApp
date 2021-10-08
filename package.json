@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "next": "10.2.3",
     "react": "17.0.2",
