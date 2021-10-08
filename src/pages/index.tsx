@@ -13,7 +13,7 @@ export default function Products() {
   const { productDetailModalOpen, closeProductDetailModal, products, loading } =
     useContext(ProductContext);
 
-  if(!loading) {
+  if(loading) {
     return (
       <div className={styles.loadingBox}>
         <ReactLoading type={`bars`} color={`var(--yellow)`}  />
