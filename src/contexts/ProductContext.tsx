@@ -28,6 +28,7 @@ interface ProductContextData {
   productDetailModalOpen: boolean;
   closeProductDetailModal: () => void;
   openProductDetailModal: (ProtudoAttributeProps) => void;
+  loading?: boolean;
 }
 
 interface ProductProviderProps {
@@ -41,6 +42,7 @@ export function ProductsProvider({ children }: ProductProviderProps) {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [productOnModal, setProductOnModal] = useState<ProductProps>();
   const [productDetailModalOpen, setProductDetailModalOpen] = useState(false);
+  const [productLoading, setProductLoading] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -48,11 +50,15 @@ export function ProductsProvider({ children }: ProductProviderProps) {
 
   async function fetchProducts() {
     try {
+      setProductLoading(true);
       const { data } = await api.get("/");
       setProducts(data.items);
       setDeliveryTax(data.delivery_tax);
     } catch (error) {
+      setProductLoading(false);
       throw new ErrorEvent(error);
+    } finally {
+      setProductLoading(false);
     }
   }
 
@@ -74,6 +80,7 @@ export function ProductsProvider({ children }: ProductProviderProps) {
         productDetailModalOpen,
         closeProductDetailModal,
         openProductDetailModal,
+        loading: productLoading
       }}
     >
       {children}
