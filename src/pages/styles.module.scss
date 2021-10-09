@@ -7,3 +7,12 @@
   margin: 10px auto;
   width: 80%;
 }
+
+.loadingBox {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 5rem);
+
+  justify-content: center;
+  align-items: center;
+}
