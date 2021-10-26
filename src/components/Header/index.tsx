@@ -1,12 +1,14 @@
 import { useContext, useEffect } from "react";
 import Link from "next/link";
+import { IoMdExit } from 'react-icons/io';
 import styles from "./style.module.scss";
 
 import { Cart } from "../Cart";
 import { CartContext } from "../../contexts/CartContext";
 
 export function Header() {
-  const { totalAmount, updateTotalAmount } = useContext(CartContext);
+  const { totalAmount, updateTotalAmount, logOut } = useContext(CartContext);
+
   useEffect(() => {
     (async () => {
       await updateTotalAmount();
@@ -22,6 +24,10 @@ export function Header() {
           </Link>
         </div>
         <div className={styles.cart}>
+          <button title="Sair e limpar carrinho" className={styles.exitButton} onClick={logOut}>
+            <IoMdExit size={40} color={"var(--red)"}/>
+          </button>
+
           <Link href="/cart">
             <button className={styles.cartButton}>
               <Cart value={totalAmount} />

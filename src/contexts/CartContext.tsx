@@ -1,3 +1,4 @@
+import router from "next/router";
 import { createContext, ReactNode, useContext, useState } from "react";
 import {
   ProductProps,
@@ -18,6 +19,7 @@ interface CartContextData {
   removeProductFromCart: (id: string) => Promise<void>;
   productExisteOnCart: (id: string) => Promise<Boolean>;
   getProductAmount: (id: string) => Promise<number>;
+  logOut: () => void;
 }
 
 interface CartProviderProps {
@@ -194,6 +196,12 @@ export function CartProvider({ children }: CartProviderProps) {
     await updatePurchaseValues();
   }
 
+  async function logOut() {
+    localStorage.removeItem('@SuperMarket:products');
+
+    router.reload();
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -209,6 +217,7 @@ export function CartProvider({ children }: CartProviderProps) {
         productExisteOnCart,
         updatePurchaseValues,
         removeProductFromCart,
+        logOut,
       }}
     >
       {children}

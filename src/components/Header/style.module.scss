@@ -23,7 +23,16 @@
     }
   }
   .cart {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
     margin-right: 3rem;
+
+    .exitButton {
+      background: transparent;
+      border: 0;
+    }
   }
 
   .cartButton {
